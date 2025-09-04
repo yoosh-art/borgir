@@ -55,22 +55,7 @@
                          Rotation gestures still work. -->
                 ></a-entity>
 
-<script>
-  // Listen for when user stops rotating with one finger
-  AFRAME.scenes[0].addEventListener('onefingermoveend', function () {
-    
-    // Grab the model entity by its ID
-    let model = document.querySelector('#bowser-model');
-
-    // Apply an animation to reset rotation back to 0 0 0
-    model.setAttribute('animation__reset', {
-      property: 'rotation',   // We are animating the 'rotation' property
-      to: '0 0 0',            // Target rotation (the original orientation)
-      dur: 1000,              // Duration of animation in milliseconds (1s)
-      easing: 'easeOutQuad'   // Smooth easing effect for natural return
-    });
-  });
-</script>
+                
 
 
             </a-marker>
