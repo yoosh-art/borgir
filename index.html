@@ -48,6 +48,7 @@
                     gltf-model="#animated-asset"
                     class="clickable"
                     gesture-handler="minScale: 1.2464510940480649; maxScale: 1.2464510940480649"
+                    rotation="0 0 0" <!-- initial rotation -->
                 ></a-entity>
             </a-marker>
 
@@ -59,16 +60,18 @@
         <script>
           document.addEventListener('DOMContentLoaded', () => {
             const model = document.querySelector('#bowser-model');
-            const scene = document.querySelector('a-scene');
 
-            // Listen for end of one-finger rotation gesture
-            scene.addEventListener('onefingermoveend', () => {
-              // Animate model back to original rotation
+            // Save the initial/original rotation of the model
+            const originalRotation = model.getAttribute('rotation');
+
+            // Listen for gesture end event ON THE MODEL (not the scene)
+            model.addEventListener('onefingermoveend', () => {
+              // Animate model back to its saved original rotation
               model.setAttribute('animation__reset', {
-                property: 'rotation',   // property we want to animate
-                to: '0 0 0',            // original rotation (change if you want custom)
-                dur: 1000,              // 1 second animation
-                easing: 'easeOutQuad'   // smooth easing
+                property: 'rotation',
+                to: `${originalRotation.x} ${originalRotation.y} ${originalRotation.z}`,
+                dur: 1000,
+                easing: 'easeOutQuad'
               });
             });
           });
