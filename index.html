@@ -5,9 +5,9 @@
         <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
         <!-- AR.js integration -->
         <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-        <!-- Extra loaders (GLTF support, etc.) -->
+        <!-- Extra loaders (GLTF, animations, etc.) -->
         <script src="https://raw.githack.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-        <!-- Gesture support -->
+        <!-- Gesture support (from AR.js Studio backend) -->
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-detector.js"></script>
         <script src="https://raw.githack.com/AR-js-org/studio-backend/master/src/modules/marker/tools/gesture-handler.js"></script>
     </head>
@@ -26,16 +26,16 @@
             <a-assets>
                 <a-asset-item
                     id="animated-asset"
-                    src="assets/asset.glb"   <!-- your 3D burger model -->
+                    src="assets/asset.glb"   <!-- Your 3D burger model -->
                 ></a-asset-item>
             </a-assets>
 
-            <!-- Marker -->
+            <!-- Marker definition -->
             <a-marker
                 id="animated-marker"
                 type="pattern"
                 preset="custom"
-                url="assets/marker.patt"   <!-- your marker file -->
+                url="assets/marker.patt"   <!-- Your marker file -->
                 raycaster="objects: .clickable"
                 emitevents="true"
                 cursor="fuse: false; rayOrigin: mouse;"
@@ -48,7 +48,7 @@
                     gltf-model="#animated-asset"
                     class="clickable"
                     gesture-handler="minScale: 1.2464510940480649; maxScale: 1.2464510940480649"
-                    rotation="0 0 0" <!-- initial rotation -->
+                    rotation="0 0 0" <!-- starting/original rotation -->
                 ></a-entity>
             </a-marker>
 
@@ -61,17 +61,17 @@
           document.addEventListener('DOMContentLoaded', () => {
             const model = document.querySelector('#bowser-model');
 
-            // Save the initial/original rotation of the model
+            // Save the initial/original rotation of the model (from HTML attribute)
             const originalRotation = model.getAttribute('rotation');
 
-            // Listen for gesture end event ON THE MODEL (not the scene)
+            // Listen for the "gesture end" event ON THE MODEL
             model.addEventListener('onefingermoveend', () => {
               // Animate model back to its saved original rotation
               model.setAttribute('animation__reset', {
                 property: 'rotation',
                 to: `${originalRotation.x} ${originalRotation.y} ${originalRotation.z}`,
-                dur: 1000,
-                easing: 'easeOutQuad'
+                dur: 1000,              // 1 second duration
+                easing: 'easeOutQuad'   // smooth easing curve
               });
             });
           });
