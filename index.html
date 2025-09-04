@@ -35,14 +35,43 @@
                 cursor="fuse: false; rayOrigin: mouse;"
                 id="markerA"
             >
-                <a-entity
-                    id="bowser-model"
-                    scale="1.2464510940480649 1.2464510940480649 1.2464510940480649"
-                    animation-mixer="loop: repeat"
-                    gltf-model="#animated-asset"
-                    class="clickable"
-                    gesture-handler="minScale: 1.2464510940480649; maxScale: 1.2464510940480649"
-            ></a-entity>
+               <a-entity
+    id="bowser-model"
+    scale="1.2464510940480649 1.2464510940480649 1.2464510940480649" 
+    <!-- Fixed scale so user cannot zoom in/out -->
+
+    animation-mixer="loop: repeat" 
+    <!-- Keeps any GLTF animations looping -->
+
+    gltf-model="#animated-asset" 
+    <!-- Loads the burger 3D model from assets -->
+
+    class="clickable" 
+    <!-- So it can be interacted with (via raycaster/cursor) -->
+
+    gesture-handler="minScale: 1.2464510940480649; maxScale: 1.2464510940480649"
+    <!-- gesture-handler normally allows rotation, scaling, dragging.
+         Here, minScale and maxScale are set to the same value so scaling is locked.
+         Rotation gestures still work. -->
+></a-entity>
+
+<script>
+  // Listen for when user stops rotating with one finger
+  AFRAME.scenes[0].addEventListener('onefingermoveend', function () {
+    
+    // Grab the model entity by its ID
+    let model = document.querySelector('#bowser-model');
+
+    // Apply an animation to reset rotation back to 0 0 0
+    model.setAttribute('animation__reset', {
+      property: 'rotation',   // We are animating the 'rotation' property
+      to: '0 0 0',            // Target rotation (the original orientation)
+      dur: 1000,              // Duration of animation in milliseconds (1s)
+      easing: 'easeOutQuad'   // Smooth easing effect for natural return
+    });
+  });
+</script>
+
 
             </a-marker>
 
