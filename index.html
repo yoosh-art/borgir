@@ -35,25 +35,15 @@
                 cursor="fuse: false; rayOrigin: mouse;"
                 id="markerA"
             >
-               <a-entity
+              <a-entity
                     id="bowser-model"
-                    scale="1.2464510940480649 1.2464510940480649 1.2464510940480649" 
-                    <!-- Fixed scale so user cannot zoom in/out -->
-                
-                    animation-mixer="loop: repeat" 
-                    <!-- Keeps any GLTF animations looping -->
-                
-                    gltf-model="#animated-asset" 
-                    <!-- Loads the burger 3D model from assets -->
-                
-                    class="clickable" 
-                    <!-- So it can be interacted with (via raycaster/cursor) -->
-                
+                    scale="1.2464510940480649 1.2464510940480649 1.2464510940480649"
+                    animation-mixer="loop: repeat"
+                    gltf-model="#animated-asset"
+                    class="clickable"
                     gesture-handler="minScale: 1.2464510940480649; maxScale: 1.2464510940480649"
-                    <!-- gesture-handler normally allows rotation, scaling, dragging.
-                         Here, minScale and maxScale are set to the same value so scaling is locked.
-                         Rotation gestures still work. -->
                 ></a-entity>
+
 
                 
 
